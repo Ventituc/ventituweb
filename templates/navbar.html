@@ -1,0 +1,18 @@
+<a href="/">
+
+    <h1>VENTITUC WEB</h1>
+</a>
+
+<form method="GET" action="{% url 'home' %}">
+    <input type="text" name="q" placeholder="Que desea buscar..." />
+</form>
+
+{% if request.user.is_authenticated %}
+<p>{{user.username}}</p>
+<a href="{% url 'logout' %}">Cerrar sesion</a>
+{% else %}
+
+<a href="{% url 'login' %}">Iniciar sesion</a>
+{% endif %}
+
+<hr>

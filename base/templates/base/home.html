@@ -1,0 +1,71 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+<style>
+    .home-container{
+        display: grid;
+        grid-template-columns: 1fr 3fr 1fr;
+    }
+</style>
+
+<h1>Pagina Principal template</h1>
+
+<div class="home-container">
+
+    <div>
+        <h3>Secciones</h3>
+        <hr>
+        <div>
+            <a href="{% url 'home' %}">Todos</a>
+        </div>
+
+
+        {% for topic in topics %}
+            <div>
+                <a href="{% url 'home' %}?q={{topic.name}}">{{topic}}</a>
+            </div>
+
+        {% endfor %}
+    </div>
+
+    <div>
+        <h5>Publicaciones encontradas {{room_count}}</h5>
+        <a href="{% url 'create-room' %}"> Nuevo Ingreso</a>
+        <div>
+            {% for room in rooms %}
+            <div>
+                <a href="{% url 'update-room' room.id %}"> Editar</a>
+                <a href="{% url 'delete-room' room.id %}"> Borrar</a>
+                <span>@{{room.host.username}}</span>
+                <h5>{{room.id}} -- <a href="{% url 'room' room.id %}">{{room.name}}</a></h5>
+                <small>{{room.topic.name}}</small>
+                <hr>
+            </div>
+            {% endfor %}
+        </div>
+
+        
+    </div>
+
+
+    <div>
+        <h3>Ultimas actualizaciones</h3>
+        <hr>
+        {% for message in room_messages %}
+            <div>
+                <small>@{{message.user}} hace {{message.created|timesince}} </small>
+                <small>Comentado en "{{message.room}}"</small>
+
+                <p>{{message}}</p>
+            </div>
+
+        {% endfor %}
+
+
+    </div>
+
+
+</div>
+
+{% endblock content %}
